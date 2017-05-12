@@ -1,0 +1,39 @@
+Name,mass,wing,type
+cynopterus marginatus,14,6.38,bat
+eidolon helvum,30.73,6.87,bat
+epomorphus anurus,23.65,5.97,bat
+macroglossus minimus,20.58,5.88,bat
+p georffroyi,17.51,7.89,bat
+p giganteus,20.25,5.25,bat
+rousettus aegyptiacus,25.63,6,bat
+phynchonycteris naso,4.35,6.54,bat
+saccopteryx bilineata,5.89,6.05,bat
+noctilio labialis,13.89,7.77,bat
+n leporinus,15.23,8.82,bat
+artibeus jamaicensis,16.65,6.36,bat
+a literatus,17.72,6.09,bat
+a phaotis,9.62,6.28,bat
+carollia perspicillata,9.62,6.28,bat
+chiroderma villosum,13.95,6.38,bat
+choeroniscus godmani,9.36,6.38,bat
+chrotopterus auritus,14.92,5.46,bat
+phyllostomus discolor,15.8,7.13,bat
+p hastatus,24.47,7.79,bat
+sturnira lilium,12.16,6.52,bat
+uroderma bilobatum,10.07,6.31,bat
+vampryodes carracioloi,14.64,6.5,bat
+vampyrops helleri,11.45,6.4,bat
+albatross,120,18,bird
+albatross,140,15,bird
+albatross,56,15,bird
+albatross,104,13,bird
+grey albatross,105,13,bird
+sooty albatross,82,14,bird
+giant petrel,153,12,bird
+white chinned petrel,19,11.6,bird
+fulmar,64.5,10.3,bird
+shearwater,37,10,bird
+shearwater,47.65,9.61,bird
+ptero,57.93,19.10,d
+ptero,35.25,10.5,d
+ptero,61,18,d

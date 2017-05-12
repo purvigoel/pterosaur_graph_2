@@ -1,0 +1,454 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Graph 3D demo</title>
+  <p id="gait"> Gait </p>
+  <style>
+    body {font: 10pt arial;}
+  </style>
+
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.19.1/vis.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type="text/javascript">
+  var data = null;
+  var graph = null;
+$(document).ready(function() {
+    $.ajax({
+        type: "GET",
+        url: "data.csv",
+        dataType: "text",
+        success: function(data) {processData(data);}
+     });
+});
+
+function processData(allText) {
+    // var allTextLines = allText.split(/\r\n|\n/);
+    // var headers = allTextLines[0].split(',');
+    // var lines = [];
+
+    // for (var i=1; i<allTextLines.length; i++) {
+    //     var dat = allTextLines[i].split(',');
+    //     if (dat.length == headers.length) {
+
+    //         var tarr = [];
+    //         for (var j=0; j<headers.length; j++) {
+
+    //             data.add([
+    //               {x:dat[0],y:dat[1],z:dat[2],filter:dat[3],style:dat[2]}
+    //             ]);
+    //         }
+
+           
+    //     }
+    // }
+
+    // alert(lines);
+}
+  label = document.getElementById("gait");
+  Ltime = 0
+  var point = 0
+  function showTime(){
+    point += 1;
+    if(point < 1){
+      label.innerHTML = "flight"
+    }
+    else if(point > 1 && point < 13){
+      label.innerHTML = "touch ground"
+    }
+    else if(point > 13 && point < 30){
+      label.innerHTML = "hop"
+    }
+    else if(point > 30 && point < 40){
+      label.innerHTML = "second landing"
+    }
+    else if(point > 40 && point < 60){
+      label.innerHTML = "adjust front legs"
+    }
+    else if(point > 60 && point < 70){
+      label.innerHTML = "begin walk cycle";
+    }
+    else if(point > 70 && point < 200){
+      label.innerHTML = "walk cycle";
+    }
+    if(point > 200){
+      point = 0
+    }
+    
+  }
+  setInterval(showTime, 100);
+  function inRange(x, mmin, mmax){
+  if(x <= mmax && x >= mmin){
+    return true}
+  return false
+}
+
+console.log("SUP")
+  function normal(x,y,t){
+  
+    if(inRange(t,0,13)){
+      
+      var hop = jump(x,y,t,0,1, 0, 0)
+      if(hop > -50){
+       return hop
+      }
+    }
+    if(inRange(t, 16,40)){
+      
+      hop = jump(x,y,t-23, 100,0, 1, 1)
+
+      if(hop > -50){
+    
+        return hop
+      }
+
+    }
+    if(inRange(t,40,60)){
+      if(inRange(x,25+100,50+100) && inRange(y,25,50)){
+        return 7;
+      }
+      if(inRange(x,25+100,50+100) && inRange(y,125,150)){
+        return 7;
+      }
+      hop = jump(x,y,t-43,200,0,0,0);
+      if(hop>-50){
+        return hop
+      }
+    }
+    if(inRange(t, 60, 70)){
+      if(inRange(x,25+100,50+100) && inRange(y,25,50)){
+        return 7;
+      }
+      if(inRange(x,25+100,50+100) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,225,250) && inRange(y,125,150)){
+        return 7;
+      }
+
+      if(inRange(x,225,250) && inRange(y,25,50)){
+        var r = 15 + (t - 63)/2
+        if(r > 15){
+          return 15;
+        }
+        return 15 + (t - 63);
+      }
+    }
+    if(inRange(t, 70, 72)){
+      if(inRange(x,25+100,50+100) && inRange(y,25,50)){
+        return 7;
+      }
+      if(inRange(x,25+100,50+100) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,225,250) && inRange(y,125,150)){
+        return 7;
+      }
+    }
+    if(inRange(t, 72, 90)){
+      if(inRange(x,25+100,50+100) && inRange(y,25,50)){
+        return 7;
+      }
+      if(inRange(x,25+100,50+100) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,225,250) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,300,325) && inRange(y,25,50)){
+        var down = 15 - (t - 75);
+        if(down < 7){
+          return 7
+        }
+        if(down > 15){
+          return 15
+        }
+        return down;
+      }
+    }
+    if(inRange(t, 90, 100)){
+      if(inRange(x,225,250) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,25+100,50+100) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,300,325) && inRange(y,25,50)){
+        return 7;
+      }
+
+      if(inRange(x,25+100,50+100) && inRange(y,25,50)){
+        var r = 15 + (t - 93)
+        if(r > 15){
+          return 15;
+        }
+        return 15 + (t - 93);
+      }
+    }
+    if(inRange(t, 100, 115)){
+      if(inRange(x,225,250) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,25+100,50+100) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,300,325) && inRange(y,25,50)){
+        return 7;
+      }
+      if(inRange(x,200,225) && inRange(y,25,50)){
+        var down = 15 - (t - 103);
+        if(down < 7){
+          return 7
+        }
+        if(down > 15){
+          return 15
+        }
+        return down;
+      }
+    }
+    if(inRange(t, 115, 130)){
+      if(inRange(x,225,250) && inRange(y,125,150)){
+        var r = 15 + (t - 118)
+        if(r > 15){
+          return 15;
+        }
+        return 15 + (t - 118);;
+      }
+      if(inRange(x,25+100,50+100) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,300,325) && inRange(y,25,50)){
+        return 7;
+      }
+      if(inRange(x,200,225) && inRange(y,25,50)){    
+        return 7;
+      }
+    }
+    if(inRange(t, 130, 145)){
+      if(inRange(x,350,375) && inRange(y,125,150)){
+        var down = 15 - (t - 133);
+        if(down < 7){
+          return 7
+        }
+        if(down > 15){
+          return 15
+        }
+        return down;
+      }
+      if(inRange(x,25+100,50+100) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,300,325) && inRange(y,25,50)){
+        return 7;
+      }
+      if(inRange(x,200,225) && inRange(y,25,50)){    
+        return 7;
+      }
+    }
+    if(inRange(t, 145, 160)){
+      if(inRange(x,350,375) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,25+100,50+100) && inRange(y,125,150)){
+        var r = 15 + (t - 148)
+        if(r > 15){
+          return 15;
+        }
+        return 15 + (t - 148);
+      }
+      if(inRange(x,300,325) && inRange(y,25,50)){
+        return 7;
+      }
+      if(inRange(x,200,225) && inRange(y,25,50)){    
+        return 7;
+      }
+    }
+    if(inRange(t, 160, 175)){
+      if(inRange(x,350,375) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,250,275) && inRange(y,125,150)){
+        var down = 15 - (t - 163);
+        if(down < 7){
+          return 7
+        }
+        if(down > 15){
+          return 15
+        }
+        return down;
+      }
+      if(inRange(x,300,325) && inRange(y,25,50)){
+        return 7;
+      }
+      if(inRange(x,200,225) && inRange(y,25,50)){    
+        return 7;
+      }
+    }
+    if(inRange(t,175,200)){
+      if(inRange(x,350,375) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,250,275) && inRange(y,125,150)){
+        return 7;
+      }
+      if(inRange(x,200,225) && inRange(y,25,50)){    
+        return 7;
+      }
+      if(inRange(x,300,325) && inRange(y,25,50)){
+        var r = 15 + (t - 178)
+        if(r > 15){
+          return 15;
+        }
+        return 15 + (t - 178);
+      }
+    }
+    return 15;
+  }
+
+  count = 0
+  function jump(x,y,t, dist, comeUp, all, comeUp2){
+    
+    if(inRange(t, 0,3)){
+      return 15;
+    }
+    if(inRange(t,3,8)){
+      if(all == 1){
+      if(inRange(x,25+dist+50,50+dist+50) && inRange(y,25,50)){
+        return 15 - t;
+      } 
+      else if(inRange(x, 25+dist+50, 50+dist+50) && inRange(y, 125, 150)){
+        return 15 - t
+      }
+      }
+      if(inRange(x,25+dist,50+dist) && inRange(y,25,50)){
+        return 15 - t;
+      } 
+      else if(inRange(x, 25+dist, 50+dist) && inRange(y, 125, 150)){
+        return 15 - t
+      }
+      else {
+        return 15
+      }
+    } 
+
+
+
+
+    stop = 13
+    if(comeUp == 0){
+      stop = 100}
+    if(inRange(t,8,stop)){
+      if(all == 1){
+        if(inRange(x,25+dist+50,50+dist+50) && inRange(y,25,50)){
+        if(comeUp2 == 0){
+          return 7;
+        }
+
+       var raise = (15 - 7) + (t - 8)
+        if(raise > 15){
+          return 15
+        }
+        return raise;
+      } 
+        else if(inRange(x, 25+dist+50, 50+dist+50) && inRange(y, 125, 150)){
+        if(comeUp2 == 0){
+          return 7;
+        }
+       var raise = (15 - 7) + (t - 8)
+        if(raise > 15){
+          return 15
+        }
+        return raise;
+      }
+      }
+      if(inRange(x,25+dist,50+dist) && inRange(y,25,50)){
+        if(comeUp == 0){
+          return 7;
+        }
+        var raise = (15 - 7) + (t - 8)
+        if(raise > 15){
+          return 15
+        }
+        return raise;
+      } 
+      else if(inRange(x, 25+dist, 50+dist) && inRange(y, 125, 150)){
+        if(comeUp == 0){
+          return 7;
+        }
+       return (15 - 7) + (t - 8);
+      }
+      else {
+
+        return 15
+      }
+    }
+    
+    return -100
+  }
+  function step(x,y, t){
+    return 100-2*t;
+  }
+  // Called when the Visualization API is loaded.
+  var data = null;
+    var graph = null;
+
+    function custom(x, y, t) {
+      return Math.sin(x/50 + t/10) * Math.cos(y/50 + t/10) * 50 + 50;
+    }
+ data = new vis.DataSet();
+    // Called when the Visualization API is loaded.
+    function drawVisualization() {
+      // Create and populate a data table.
+     
+      // create some nice looking data with sin/cos
+      var steps = 25;
+      var axisMax = 400;
+      var tMax = 200;
+      var axisStep = axisMax / steps;
+      for (var t = 0; t < tMax; t++) {
+        for (var x = 0; x < axisMax; x+=axisStep) {
+          for (var y = 0; y < axisMax; y+=axisStep) {
+            
+              var value = normal(x, y, t);
+              data.add([
+                {x:x,y:y,z:value,filter:t,style:value}
+              ]);
+            
+          }
+        }
+      }
+
+      // specify options
+      var options = {
+        width:  '600px',
+        height: '600px',
+        style: 'surface',//surface
+        showPerspective: true,
+        showGrid: true,
+        showShadow: false,
+        // showAnimationControls: false,
+        keepAspectRatio: true,
+        verticalRatio: 0.5,
+        animationInterval: 100, // milliseconds
+        animationPreload: true,
+        filterValue: 'time',
+        zMin: -25,
+        zMax: 50,
+        animationAutoStart : true,
+        dataColor : {fill: '#FFFFFF', stroke: '#3267D2', strokeWidth: 1}
+      };
+
+      // create our graph
+      var container = document.getElementById('mygraph');
+      graph = new vis.Graph3d(container, data, options);
+    }
+  </script>
+  
+</head>
+
+<body onload="drawVisualization();">
+<div id="mygraph"></div>
+
+<div id="info"></div>
+</body>
+</html>
+
